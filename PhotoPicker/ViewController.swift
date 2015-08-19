@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import Social
+import Accounts
 
 class ViewController: UIViewController {
 
@@ -77,10 +79,23 @@ class ViewController: UIViewController {
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     self.capturedImage.image = image
                     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    
+                    if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
+                        let twitterController:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                        twitterController.setInitialText("Posting a tweet from iOS App" + "\r\n" + "\r\n" + "#Cool")
+                        twitterController.addImage(image)
+                        self.presentViewController(twitterController, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Twitter Account", message: "Please login to your Twitter account.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 
                 }
             })
         }
+        
+
     }
     
     @IBAction func didPressTakeAnother(sender: AnyObject) {
