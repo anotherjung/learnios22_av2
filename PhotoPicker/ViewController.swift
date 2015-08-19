@@ -80,9 +80,53 @@ class ViewController: UIViewController {
                     self.capturedImage.image = image
                     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                     
+                    
+                    
+//                    //tweet
+//                    let accountStore = ACAccountStore()
+//                    print(accountStore)
+//                    let twitterAccountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+//                    accountStore.requestAccessToAccountsWithType(twitterAccountType,
+//                        options: nil,
+//                        completion: {
+//                            (granted: Bool, error: NSError!) -> Void in
+//                            if (!granted) {3
+//                                print ("Access to Twitter Account denied")
+//                            } else {
+//                                let twitterAccounts = accountStore.accountsWithAccountType(twitterAccountType)
+//                                if twitterAccounts.count == 0 {
+//                                    print ("No Twitter Accounts available")
+//                                    return
+//                                } else {
+//                                    let twitterParams = [
+//                                        "status" : "yo",
+//                                        "image" : image
+//                                        
+//                                    ]
+//                                    let twitterAPIURL = NSURL(string: "https://api.twitter.com/1.1/statuses/update.json")
+//                                    let request = SLRequest(forServiceType: SLServiceTypeTwitter,
+//                                        requestMethod: SLRequestMethod.POST,
+//                                        URL: twitterAPIURL,
+//                                        parameters: twitterParams)
+//                                    request.account = twitterAccounts.first as! ACAccount
+//                                    request.performRequestWithHandler({
+//                                        (responseData: NSData!, urlResponse: NSHTTPURLResponse!, error: NSError!) -> Void in
+//                                        Tweet.handlePostTweetResponse(responseData, urlResponse: urlResponse, error: error)
+//                                    })
+//                                }
+//                            }
+//
+//                            
+//                            
+//                    })
+                    
+                    
+
+                    //starts
                     if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
                         let twitterController:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
                         twitterController.setInitialText("Posting a tweet from iOS App" + "\r\n" + "\r\n" + "#Cool")
+                        //img
                         twitterController.addImage(image)
                         self.presentViewController(twitterController, animated: true, completion: nil)
                     } else {
@@ -90,6 +134,7 @@ class ViewController: UIViewController {
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                         self.presentViewController(alert, animated: true, completion: nil)
                     }
+                    //ends
                 
                 }
             })
@@ -102,6 +147,8 @@ class ViewController: UIViewController {
         captureSession!.startRunning()
     }
 
+    
+    
 
 }
 
